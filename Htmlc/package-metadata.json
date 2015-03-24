@@ -1,0 +1,7 @@
+{
+"url":"http://git.oschina.net/yswang/htmlc",
+"version": "2015.02.04",
+"description": "Html template comiple to html files using jinja2 engine"
+"author": "yswang",
+"homepage": "http://git.oschina.net/yswang/htmlc"
+}

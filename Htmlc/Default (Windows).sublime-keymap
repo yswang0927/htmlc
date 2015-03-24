@@ -1,0 +1,6 @@
+[
+  {
+    "keys": ["alt+h"], "command": "htmlc_to_html",
+    "keys": ["ctrl+shift+c"], "command": "all_htmlc_to_html"
+  }
+]

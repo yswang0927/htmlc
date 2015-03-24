@@ -1,0 +1,68 @@
+[
+  {
+    "id": "tools",
+    "children":
+    [
+      {
+        "caption": "Htmlc > html",
+        "id": "htmlc2html",
+        "children":
+        [
+          { "command": "htmlc_to_html", "caption": "Compile Current Htmlc file"},
+          { "caption": "-" },
+          { "command": "all_htmlc_to_html", "caption": "Compile All Htmlc files"},
+        ]
+      }
+    ]
+  },
+  {
+    "caption": "Preferences",
+    "mnemonic": "n",
+    "id": "preferences",
+    "children":[
+      {
+        "caption": "Package Settings",
+        "mnemonic": "P",
+        "id": "package-settings",
+        "children":[
+          {
+            "caption": "Htmlc",
+            "children":[
+              {
+                "caption": "Settings",
+                "command": "open_file",
+                "args": {
+                  "file": "${packages}/Htmlc/htmlc.sublime-settings"
+                }
+              },
+              { "caption": "-" },
+              {
+                "command": "open_file",
+                "args": {
+                  "file": "${packages}/Htmlc/Default (Windows).sublime-keymap",
+                  "platform": "Windows"
+                },
+                "caption": "Key Bindings – Default"
+              },
+              { "caption": "-" },
+              {
+                "caption": "Jinja2 Template Docs",
+                "command": "open_file",
+                "args": {
+                  "file": "${packages}/Htmlc/jinja2-docs.md"
+                }
+              },
+              {
+                "caption": "Readme",
+                "command": "open_file",
+                "args": {
+                  "file": "${packages}/Htmlc/README.md"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]
