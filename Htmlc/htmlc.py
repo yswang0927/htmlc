@@ -1,6 +1,6 @@
-# Html template comiple to html files using jinja2 engine for Sublime Text3
-# author: yswang(wangys0927@gmail.com)
-# version: 0.1.0-2015/02/04
+# Html template compile to html files using jinja2 engine for Sublime Text3
+# Author: yswang(wangys0927@gmail.com)
+# Version: 0.1.1-2015/08/06
 
 import os
 import sys
@@ -56,7 +56,7 @@ def htmlcAll():
 def htmlc(filepath):
   if filepath is None:
     return
-
+  filepath = replaceOsSep(filepath)
   (fileroot, fileext) = os.path.splitext(filepath)
   if (fileext != '.htmlc'):
     return
@@ -67,7 +67,6 @@ def htmlc(filepath):
   _encoding = cfg[CFG_ENCODING]
 
   (tmpl_file_dir, tmpl_file_name)=os.path.split(filepath);
-
   if _tmpl_dir=='':
     _tmpl_dir=tmpl_file_dir
 
@@ -75,8 +74,9 @@ def htmlc(filepath):
     _output_dir=tmpl_file_dir
 
   # relative path from current file path
-  if (_output_dir.startswith('./') or _output_dir.startswith('../') or _output_dir.startswith('.\\') or _output_dir.startswith('..\\')):
-    _output_dir=os.path.join(tmpl_file_dir, _output_dir)
+  #if (_output_dir.startswith('./') or _output_dir.startswith('../') or _output_dir.startswith('.\\') or _output_dir.startswith('..\\')):
+  if (_output_dir.startswith('.'+ os.sep) or _output_dir.startswith('..'+ os.sep)):
+    _output_dir=os.path.join(_tmpl_dir, _output_dir)
 
   # parse relative path: ./ ../ if exists
   _output_dir=os.path.normpath(_output_dir)
@@ -98,7 +98,6 @@ def htmlc(filepath):
   except Exception as ex:
     sublime.error_message('Error: Failed to init jinja2 Environment: {0} !'.format(str(ex)))
 
-
   tmpl_file_subdir=''
   if tmpl_file_dir.startswith(_tmpl_dir):
     # delete the template dir prevfix path
@@ -108,6 +107,7 @@ def htmlc(filepath):
   status_msg=''
   # get template file
   try:
+    # template file path sep must be /
     template = templateEnv.get_template(os.path.join(tmpl_file_subdir, tmpl_file_name).replace(os.sep, '/'))
     _html = template.render()
 
@@ -124,7 +124,7 @@ def htmlc(filepath):
     html_file.write(_html)
     html_file.close()
     
-    status_msg = 'O(∩_∩)O Comiple ['+ tmpl_file_name +'] to ['+ output_file +'] success!! O(∩_∩)O~'
+    status_msg = 'O(∩_∩)O Comiple ['+ tmpl_file_subdir + '/' + tmpl_file_name +'] to ['+ output_file +'] success!! O(∩_∩)O~'
 
   except TemplateNotFound as ex:
     err_msg = bytes(str(ex), encoding = 'utf-8')
@@ -139,7 +139,13 @@ def htmlc(filepath):
   sublime.set_timeout(functools.partial(reloadHtml, output_file), 400);
 
 
+def replaceOsSep(path):
+  path = path.replace('/', os.sep)
+  path = path.replace('\\', os.sep)
+  return path
+
 def normalizePath(path):
+  path = replaceOsSep(path)
   if (path.endswith(os.sep)):
     path=path[:-1]
   return path
